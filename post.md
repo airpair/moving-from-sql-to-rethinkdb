@@ -445,7 +445,7 @@ RethinkDB supports primary and secondary indexes. Primary indexes enforce unique
 
 Like indexes in SQL databases adding them improve the speed of many read queries at the slight cost of increased storage space and decreased write performance.
 
-In MySQL and PostgreSQL there are slightly different options for indexes, you are able to create single, compound, and geospatial indexes (with an extension in MySQL). You can also choose which underlying indexing algorithm to use.
+In MySQL and PostgreSQL there are slightly different options for indexes. In both of these, you are able to create single, compound, and geospatial indexes (with an extension in MySQL). You can also choose which underlying indexing algorithm to use.
 
 You are also able to enforce uniqueness on any field in SQL database. This is something you have to sacrifice with RethinkDB to allow for it's distributed qualities.
 
