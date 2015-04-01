@@ -91,20 +91,20 @@ This creates two virtual machines with Ubuntu and installs the dependencies requ
 
 The installation of MySQL and PostgreSQL servers on Ubuntu is a one-line operation as Ubuntu includes both in its source list by default.
 
-##### PostgreSQL
 ```bash,linenums=true
+# PostgresSQL
 sudo apt-get install postgresql
 ```
 
-##### MySQL
 ```bash,linenums=true
+# MySQL
 sudo apt-get install mysql-server
 ```
 
 RethinkDb requires you add a source list, run `apt-get update` and then use `apt-get` to install RethinkDB. Their website provides this in one command.
 
-##### RethinkDB
 ```bash,linenums=true
+# RethinkDB
 source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
 wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
 sudo apt-get update
@@ -114,6 +114,7 @@ sudo apt-get install rethinkdb
 Both MySQL and PostgreSQL daemons run straight after installation, however RethinkDB does not. To get RethinkDB up and running with init.d you need to do this:
 
 ```bash,linenums=true
+# RethinkDB
 sudo cp /etc/rethinkdb/default.conf.sample /etc/rethinkdb/instances.d/instance1.conf
 sudo /etc/init.d/rethinkdb restart
 ```
@@ -140,10 +141,11 @@ MySQL and PostgreSQL do not come with GUIs and instead ship with command line ut
 If you would like you can also access RethinkDB on the command line through the Python REPL by doing the following:
 
 ```python
+# RethinkDB
 import rethinkdb as r
 r.connect('localhost', 28015).repl()
 
-#To get a set of results
+# To get a set of results
 list(r.db('dragonball').table('characters').limit(3).run())
 ```
 
@@ -157,13 +159,13 @@ When using ReQL inside of the GUI the format conforms to that of the native Java
 
 ![Code Completion on RethinkDB Data Explorer GUI](http://i.imgur.com/GgoCBj3.png)
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r.dbCreate('dragonball');
 ```
 
-##### SQL
 ```sql,linenums=true
+# SQL
 CREATE DATABASE dragonball;
 ```
 
@@ -171,8 +173,8 @@ CREATE DATABASE dragonball;
 
 The creation of a table in SQL and RethinkDB brings forward the issue of requiring a schema. In the world of RethinkDB you need not concern yourself with confirming the structure of your data prior to creating a table, only knowing that you want to store a certain type of something. 
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r.db('dragonball').createTable('characters');
 ```
 
@@ -180,8 +182,8 @@ In SQL however, data modelling has to be considered as a step prior to creating 
 
 In our example, a character may originate from one or more species in the Dragonball world. In RethinkDB we have not committed, or made any decisions, or how we are going to store this information, whereas with SQL we have made the decision to normalise our data set and use a *link table* to turn a MANY-to-MANY relationship into ONE-to-MANY-to-ONE.
 
-##### SQL
 ```sql,linenums=true
+# SQL
 CREATE TABLE characters (
      id int NOT NULL AUTO_INCREMENT,
      name varchar(50) NOT NULL,
@@ -224,8 +226,8 @@ With insertion you notice that RethinkDB works with, and stores documents as JSO
 
 When it comes to storing information about each character's species it is as simple as storing an array inside each document if the species is known, and omitting that field if not.
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r
   .db('dragonball')
   .table('characters')
@@ -242,8 +244,8 @@ r
 
 In SQL we first create the characters, and then species and then insert the link records.
 
-##### SQL
 ```sql,linenums=true
+# SQL
 INSERT INTO characters (name, max_strength)
     VALUES
         ('Goku', 1000000),
@@ -278,8 +280,8 @@ INSERT INTO character_species (character_id, species_id)
 
 When searching for equality on one of more fields there is not too much to differentiate the two approaches. 
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r
     .db('dragonball')
     .table('characters')
@@ -288,8 +290,8 @@ r
 
 ![RethinkDB Query Results](http://i.imgur.com/RAQc3r4.png)
 
-##### SQL
 ```sql,linenums=true
+# SQL
 SELECT * 
 FROM characters 
 WHERE name = 'Goku';
@@ -299,8 +301,8 @@ WHERE name = 'Goku';
 
 When looking for something other than equality you begin to be introduced to other aspects of the RethinkDB Query DSL. You can use functions as filters on your data. The documentation into the [RethinkDB API](http://rethinkdb.com/api/javascript/) provides a great resource for familiarising yourself with the things you can do with it.
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r
     .db('dragonball')
     .table('characters')
@@ -310,8 +312,8 @@ r
     .orderBy(r.desc('maxStrength'));
 ```
 
-##### SQL
 ```sql,linenums=true
+# SQL
 SELECT c.* 
 FROM characters c
 INNER JOIN character_species cs ON c.id = cs.character_id
@@ -323,9 +325,8 @@ ORDER BY max_strength DESC;
 
 With ReQL grouping is something that is less fraught with peril. In order to group characters in our database by species we can acheive this very simply by applying a group by species.
 
-
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r
     .db('dragonball')
     .table('characters')
@@ -336,8 +337,8 @@ To acheive a similar result in SQL requires the use of LEFT JOINs (to ensure And
 
 *`group_concat()` des not exist in PostgreSQL, you'd have to `use array_agg()`*
 
-##### SQL
 ```sql,linenums=true
+# SQL
 SELECT c.*, group_concat(s.name) as species 
 FROM characters c 
 LEFT JOIN character_species cs ON c.id = cs.character_id 
@@ -349,6 +350,7 @@ ORDER BY species
 The grouping could also be acheived in a slightly more equivalent manner to the ReQL query with a slight loss of information around each character. This will also only group characters by individual species not by a compound species. Trunks and Gohan would appear in both the Human and Saiyan groupings.
 
 ```sql,linenums=true
+# SQL
 SELECT s.name, group_concat(c.name) as characters
 FROM characters c 
 LEFT JOIN character_species cs ON c.id = cs.character_id 
@@ -360,8 +362,8 @@ GROUP BY s.id
 
 Updating in RethinkDB is similar in many regards to SQL when working with existing fields. You can update all entries in a table, or filtered sub-set of entries.
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r
     .db('dragonball')
     .table('characters')
@@ -369,8 +371,8 @@ r
     .update({maxStrength: 2500000});
 ```
 
-##### SQL
 ```sql,linenums=true
+# SQL
 UPDATE characters 
 SET max_strength = 2500000
 WHERE name = 'Goku';
@@ -380,8 +382,8 @@ With SQL you are restricted to updating records with the data type for that fiel
 
 In a similar fashion you can add properties from documents in a table with the update command. In the SQL world you would have to consider a data migration, whereas here you can immediately apply a change to a collection.
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r
     .db('dragonball')
     .table('characters')
@@ -390,8 +392,8 @@ r
     
 ```
 
-##### SQL
 ```sql,linenums=true
+# SQL
 ALTER TABLE characters 
 ADD COLUMN age int NULL;
 
@@ -402,8 +404,8 @@ WHERE name = 'Goku';
 
 If you would like to remove properties from a RethinkDB table you need to use to the `replace()` function. Combining this with `row.without(...)` enables you to replace each row in the table without a field, or fields.
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r
     .db('dragonball')
     .table('characters')
@@ -412,8 +414,8 @@ r
 
 In SQL to drop a column may seem slightly more intuitive by altering the table structure.
 
-##### SQL
 ```sql,linenums=true
+# SQL
 ALTER TABLE characters 
 DROP COLUMN max_strength;
 ```
@@ -422,8 +424,8 @@ DROP COLUMN max_strength;
 
 Deleting any records from a table is, unsurprisingly, not any different in terms of functionality. You can either empty a whole table or delete the resulting set from a filter.
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 r
     .db('dragonball')
     .table('characters')
@@ -431,8 +433,8 @@ r
     .delete()
 ```
 
-##### SQL
 ```sql,linenums=true
+# SQL
 DELETE FROM characters
 WHERE name = 'Goku';
 ```
@@ -465,8 +467,8 @@ So far we have look at how RethinkDB differs from working with SQL and RDBMS dat
 
 Below are very basic examples of using rethinkdb, mysql and postgres in Node.js to print the results of the group query.
 
-##### RethinkDB
 ```javascript,linenums=true
+// RethinkDB
 var r = require('rethinkdb');
 r
 .connect( {host: 'localhost', port: 28015, db: 'dragonball'})
@@ -488,8 +490,8 @@ r
 });
 ```
 
-##### MySQL
 ```javascript,linenums=true
+// MySQL
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -515,8 +517,8 @@ connection.query(groupQuery, function(err, rows, fields) {
 connection.end();
 ```
 
-##### PostgreSQL
 ```javascript,linenums=true
+// PostgreSQL
 var pg = require('pg');
 var conString = "postgres://vagrant:awesome@localhost/dragonball";
 
@@ -560,12 +562,14 @@ The ability to scale is considered one of the main benefits to using NoSQL over 
 We can create a RethinkDB cluster with two commands. On our first VM run:
 
 ```bash,linenums=true
+# RethinkDB
 rethinkdb --bind all
 ```
 
 And on our second machine we run:
 
 ```bash,linenums=true
+# RethinkDB
 rethinkdb --join 192.168.33.11:29015 --bind all
 ```
 
@@ -594,6 +598,7 @@ A common approach with SQL systems would be to monitor the replication logs for 
 The below example shows us monitoring for changes any Saiyans in our characters table.
 
 ```javascript,linenums=true
+// RethinkDB
 var r = require('rethinkdb');
 r
 .connect({host: 'localhost', port: 28015, db: 'dragonball'})
