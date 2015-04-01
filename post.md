@@ -2,7 +2,7 @@ I have been a software engineer for coming up to 10 years now. Throughout academ
 
 I have built up a strong understanding of SQL and its capabilties. I am a big fan of it and its declarative nature. However, I have often come up against scenarios where SQL and RDBMS have struggled and I understand that SQL is not right for everything. The relatively recent rise and proliferation of NoSQL databases have given developers an increasingly large amount of choice on what to use for their persistance layer.
 
-When we began working on [Workshape.io](http://www.workshape.io) we needed to choose a data storage layer that would allow us to rapidly iterate and evolve our data structure over time. We needed something that let us focus on our application and prototyping over data modelling. I saw RethinkDB as a great choice, moving away from my traditional routes working with SQL. What begun as something of an experimental choice, and exploration of working with NoSQL, quickly established itself as a very impressive option that formed the basis of our application. 
+When we began working on [Workshape.io](http://www.workshape.io) we needed to choose a data storage layer that would allow us to rapidly iterate and evolve our data structure over time. We needed something that let us focus on our application and prototyping over data modelling. I saw RethinkDB as a great choice, moving away from my traditional routes of working with SQL. What begun as something of an experimental choice, and exploration of working with NoSQL, quickly established itself as a very impressive option that formed the basis of our application. 
 
 This post is about using [RethinkDB](http://www.rethinkdb.com/), a NoSQL database, as an engineer coming from an SQL background. It is a comprehensive comparison of the main tasks you may find yourself performing when using either in a web development environment.
 
@@ -636,13 +636,13 @@ That's it. Any changes made to existing records, or new ones added that match th
 
 By using this feature in conjunction with Web Sockets it is refreshingly easy to push changes to a client.
 
-### Conclusions
+## Conclusions
 
 In this post we have covered the basics of working with RethinkDB in relation to it's SQL counterparts. I have tried to provide a comprehensive comparative usage to allow readers to see the two side by side and gain more of a hands on understanding of RethinkDB and it's relative merits. As we moved from the basic commands to real-world usage the difference in developer experience should be clearer, with RethinkDB building out their product with you, the developer, at the centre of it.
 
 If you are working on a new web or mobile project I would strongly advise the consideration of RethinkDB. It is incredibly developer friendly with very powerful features for building web applications. The overwhelming experience for us has been that RethinkDB has allowed me and my team at Workshape.io to focus more on our product rather than low-level engineering oriented tasks that may detract from our current velocity. It has helped us stay focussed and efficient. 
 
-### Source
+## Source Code
 
 If you would like to run through the example I have created a [Github repository](https://github.com/GordyD/rethinkdb-vs-sql-demo) with the source code and instructions for set up.
 
