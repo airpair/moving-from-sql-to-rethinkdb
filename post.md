@@ -175,7 +175,7 @@ The creation of a table in SQL and RethinkDB brings forward the issue of requiri
 
 ```javascript,linenums=true
 // RethinkDB
-r.db('dragonball').createTable('characters');
+r.db('dragonball').tableCreate('characters');
 ```
 
 In SQL however, data modelling has to be considered as a step prior to creating your tables. This is important to flag up as in agile development, SQL puts up a significant road-block here. There is certain commitment that needs to be made by the developer up-front in order to cement the schema of a database. 
@@ -323,7 +323,7 @@ AND s.name = 'Saiyan'
 ORDER BY max_strength DESC;
 ```
 
-With ReQL grouping is something that is less fraught with peril. In order to group characters in our database by species we can acheive this very simply by applying a group by species.
+With ReQL grouping is something that is less fraught with peril. In order to group characters in our database by species we can achieve this very simply by applying a group by species.
 
 ```javascript,linenums=true
 // RethinkDB
@@ -333,7 +333,7 @@ r
     .group('species');
 ```
 
-To acheive a similar result in SQL requires the use of LEFT JOINs (to ensure Android 16) is included in the result set, plus the use of `group_concat()` to make sure we do not lose information from the grouping.
+To achieve a similar result in SQL requires the use of LEFT JOINs (to ensure Android 16) is included in the result set, plus the use of `group_concat()` to make sure we do not lose information from the grouping.
 
 *`group_concat()` des not exist in PostgreSQL, you'd have to `use array_agg()`*
 
@@ -347,7 +347,7 @@ GROUP BY c.id
 ORDER BY species
 ```
 
-The grouping could also be acheived in a slightly more equivalent manner to the ReQL query with a slight loss of information around each character. This will also only group characters by individual species not by a compound species. Trunks and Gohan would appear in both the Human and Saiyan groupings.
+The grouping could also be achieved in a slightly more equivalent manner to the ReQL query with a slight loss of information around each character. This will also only group characters by individual species not by a compound species. Trunks and Gohan would appear in both the Human and Saiyan groupings.
 
 ```sql,linenums=true
 # SQL
@@ -360,8 +360,7 @@ GROUP BY s.id
 
 ### Updating
 
-Updating in RethinkDB is similar in many regards to SQL when working with existing fields. You can update all entries in a table, or filtered sub-set of entries.
-
+Updating in RethinkDB is similar in many regards to SQL when working with existing fields. You can update all entries in a table, or a filtered sub-set of entries
 ```javascript,linenums=true
 // RethinkDB
 r
@@ -443,7 +442,7 @@ WHERE name = 'Goku';
 
 RethinkDB supports primary and secondary indexes. Primary indexes enforce uniqueness but secondary indexes do not. [Secondary indices](http://rethinkdb.com/api/python/index_create/) can be a single, compound, multi or geospatial index. 
 
-Like indexes in SQL databases adding them improve the speed of many read queries at the slight cost of increased storage space and decreased write performance.
+Like indexes in SQL databases adding them improves the speed of many read queries at the slight cost of increased storage space and decreased write performance.
 
 In MySQL and PostgreSQL there are slightly different options for indexes. In both of these, you are able to create single, compound, and geospatial indexes (with an extension in MySQL). You can also choose which underlying indexing algorithm to use.
 
@@ -557,7 +556,7 @@ In the world of RethinkDB you can also use an ORM if you so desire. If you would
 
 ### Operating at scale
 
-The ability to scale is considered one of the main benefits to using NoSQL over SQL. RethinkDB provides the ability to almost effortlessly scale to a multi-node cluster just by running a couple of commands. Configuration quite not be simpler!
+The ability to scale is considered one of the main benefits to using NoSQL over SQL. RethinkDB provides the ability to almost effortlessly scale to a multi-node cluster just by running a couple of commands. Configuration could not be simpler!
 
 We can create a RethinkDB cluster with two commands. On our first VM run:
 
