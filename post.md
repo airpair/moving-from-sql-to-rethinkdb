@@ -153,7 +153,7 @@ We at [Workshape.io](http://www.workshape.io) have also built a [command line](h
 
 ### Creating a database
 
-This is where you begin to notice the difference between SQl and RethinkDB, with RethinkDB having its own query language [ReQL](http://rethinkdb.com/docs/introduction-to-reql/). ReQL has official native bindings in Javascript, Ruby and Python (A number of unofficial bindings are also [available](http://www.rethinkdb.com/docs/install-drivers/)). With this chainable query language you are able to 'talk' to your database in a language you are already comfortable with. One of the biggest benefits to arise from this approach is that **query injection** is now something of the past as you are no longer manipulating strings when querying a database.
+This is where you begin to notice the difference between SQL and RethinkDB, with RethinkDB having its own query language [ReQL](http://rethinkdb.com/docs/introduction-to-reql/). ReQL has official native bindings in Javascript, Ruby and Python (A number of unofficial bindings are also [available](http://www.rethinkdb.com/docs/install-drivers/)). With this chainable query language you are able to 'talk' to your database in a language you are already comfortable with. One of the biggest benefits to arise from this approach is that **query injection** is now something of the past as you are no longer manipulating strings when querying a database.
 
 When using ReQL inside of the GUI the format conforms to that of the native Javascript API. The GUI comes with a code completion suggestor built in, so it is a great tool to begin when you are starting out.
 
