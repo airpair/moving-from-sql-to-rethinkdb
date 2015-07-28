@@ -462,7 +462,7 @@ However, RethinkDB also offers the ability to link data across multiple tables w
 
 ### Using RethinkDB in your application
 
-So far we have look at how RethinkDB differs from working with SQL and RDBMS databases but we have not covered what it is like using each of the options inside your application code. In this example I will be using Node.js to demonstrate the various differences between the two.
+So far we have looked at how RethinkDB differs from working with SQL and RDBMS databases but we have not covered what it is like using each of the options inside your application code. In this example I will be using Node.js to demonstrate the various differences between the two.
 
 Below are very basic examples of using rethinkdb, mysql and postgres in Node.js to print the results of the group query.
 
@@ -548,9 +548,9 @@ pg.connect(conString, function(err, client, done) {
 
 The most noticeable difference, that was mentioned earlier, is that RethinkDB's query language is embedded into Node.js and therefore there is no context switching between querying your database and performing other tasks in your application. From an engineering point of view this could be seen to help with productivity for the individual and the team. You could also argue that your source code is more readable.
 
-In SQL systems all queries are sent as strings to the database server for processing. In both MySQL and PostgreSQL examples the specific npm modules used provide parameterisation support to add against SQL injection, which is something you need not concern yourself with with RethinkDB.
+In SQL systems all queries are sent as strings to the database server for processing. In both MySQL and PostgreSQL examples the specific npm modules used provide parameterisation support to protect against SQL injection, which is something you need not concern yourself with when using RethinkDB.
 
-In larger applications and/or when working frameworks it is quite common to work with an ORM to abstract the need to work with SQL to work with your database. When using these in conjunction with MySQL or PostgreSQL you may feel that RethinkDB's API is nothing too special. But in this case the important thing to remember is that various ORMs make assumptions about how you want to work with your data, and depending upon its underlying implementation (Active Record or Data Mapper) it can limit and hinder the performance you get from your RDBMS. The full power of RethinkDB and its query language is available out of the box. You can ORM convenience with it's embedded API without any assumptions limiting which queries will run efficiently.
+In larger applications and/or when working frameworks it is quite common to work with an ORM to abstract the need to work with SQL to work with your database. When using these in conjunction with MySQL or PostgreSQL you may feel that RethinkDB's API is nothing too special. But in this case the important thing to remember is that various ORMs make assumptions about how you want to work with your data, and depending upon its underlying implementation (Active Record or Data Mapper) it can limit and hinder the performance you get from your RDBMS. The full power of RethinkDB and its query language is available out of the box. You get ORM-style convenience with it's embedded API without any assumptions limiting which queries will run efficiently.
 
 In the world of RethinkDB you can also use an ORM if you so desire. If you would like to have some enforcement of schema you can work with [Thinky](http://thinky.io), a light weight ORM specifically built for RethinkDB.
 
@@ -580,7 +580,7 @@ It will also inform you when one of the servers has gone away and give you instr
 
 ![RethinkDB node down](http://i.imgur.com/JX1Xcnm.png)
 
-In the SQL world scaling is much more of a daunting tasks with a [number of strategies](http://www.slideshare.net/ScaleBase/strategies-for-scaling-my-sql) to be considered dependent upon your specific use case and needs. To begin with the common approach is to beef up the box on which you are running your database server, known as vertical scaling. There is also Master-Slave replication and possibility of directing writes to one db server and reads to another.
+In the SQL world scaling is much more of a daunting task with a [number of strategies](http://www.slideshare.net/ScaleBase/strategies-for-scaling-my-sql) to be considered dependent upon your specific use case and needs. To begin with the common approach is to beef up the box on which you are running your database server, known as vertical scaling. There is also Master-Slave replication and possibility of directing writes to one db server and reads to another.
 
 Whichever strategy you adopt when working with an SQL database it is most definitely a more challenging task to complete than in RethinkDB with many more variables. In RethinkDB it is incredibly simple to scale, and no extra effort to utilise with ReQL automatically parallelising queries across your cluster.
 
